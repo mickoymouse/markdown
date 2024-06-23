@@ -19,8 +19,9 @@ const fontRbMono = Roboto_Mono({
 });
 
 export default function Home() {
-	// #region initialize data
 	const [mdData, setMdData] = useState<Data[]>(initialData);
+
+	// #region initialize data
 
 	useEffect(() => {
 		const data = getFromLS();
@@ -45,8 +46,8 @@ export default function Home() {
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 
 	return (
-		<main className="flex w-full min-h-screen">
-			<Sidebar isOpen={sidebarIsOpen} />
+		<main className="flex w-full min-h-screen bg-white">
+			<Sidebar isOpen={sidebarIsOpen} documents={mdData} />
 			<div
 				className={cn("w-full flex flex-col transition-all duration-300", {
 					"ml-[250px]": sidebarIsOpen,
