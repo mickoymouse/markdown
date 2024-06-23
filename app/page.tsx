@@ -117,7 +117,7 @@ export default function Home() {
 			return (
 				<p
 					{...rest}
-					className={`text-preview-p leading-6 text-cstm-black-500 dark:text-cstm-black-400 ${fontRbMono.className}`}
+					className={`text-preview-p leading-6 text-cstm-black-500 dark:text-cstm-black-400 ${fontRbSlab.className}`}
 				>
 					{children}
 				</p>
@@ -148,6 +148,26 @@ export default function Home() {
 				<a {...rest} className={`text-blue-500 underline`}>
 					{children}
 				</a>
+			);
+		},
+		ol({ children, ...rest }) {
+			return (
+				<ol
+					{...rest}
+					className={`list-decimal list-inside text-preview-p leading-6 text-cstm-black-500 dark:text-cstm-black-400 ${fontRbSlab.className}`}
+				>
+					{children}
+				</ol>
+			);
+		},
+		ul({ children, ...rest }) {
+			return (
+				<ul
+					{...rest}
+					className={`list-disc list-inside text-preview-p leading-6 text-cstm-black-500 dark:text-cstm-black-400 marker:text-cstm-orange-default ${fontRbSlab.className}`}
+				>
+					{children}
+				</ul>
 			);
 		},
 	};
