@@ -8,58 +8,24 @@ const config: Config = {
 	],
 	theme: {
 		extend: {
-			textSizes: {
-				"body-m": {
-					fontSize: 0.8125,
-					weight: 300,
-				},
-				"heading-m": {
-					fontSize: 0.9375,
-					weight: 400,
-				},
-				"heading-s": {
-					fontSize: 0.875,
-					weight: 500,
-				},
-				"markdown-code": {
-					fontSize: 0.875,
-					weight: 400,
-					lineHeight: 1.5,
-				},
-				"preview-h1": {
-					fontSize: 2,
-					weight: 700,
-				},
-				"preview-h2": {
-					fontSize: 1.75,
-					weight: 300,
-				},
-				"preview-h3": {
-					fontSize: 1.5,
-					weight: 700,
-				},
-				"preview-h4": {
-					fontSize: 1.25,
-					weight: 700,
-				},
-				"preview-h5": {
-					fontSize: 1,
-					weight: 700,
-				},
-				"preview-h6": {
-					fontSize: 0.875,
-					weight: 700,
-				},
-				"preview-p": {
-					fontSize: 0.875,
-					weight: 400,
-					lineHeight: 1.5,
-				},
-				"preview-p-bold": {
-					fontSize: 0.875,
-					weight: 700,
-					lineHeight: 1.5,
-				},
+			fontSize: {
+				"body-m": "0.8125rem", // Equivalent to 13px (0.8125 * 16px)
+				"heading-m": "0.9375rem", // Equivalent to 15px (0.9375 * 16px)
+				"heading-s": "0.875rem", // Equivalent to 14px (0.875 * 16px)
+				"markdown-code": "0.875rem", // Equivalent to 14px (0.875 * 16px)
+				"preview-h1": "2rem", // Equivalent to 32px (2 * 16px)
+				"preview-h2": "1.75rem", // Equivalent to 28px (1.75 * 16px)
+				"preview-h3": "1.5rem", // Equivalent to 24px (1.5 * 16px)
+				"preview-h4": "1.25rem", // Equivalent to 20px (1.25 * 16px)
+				"preview-h5": "1rem", // Equivalent to 16px (1 * 16px)
+				"preview-h6": "0.875rem", // Equivalent to 14px (0.875 * 16px)
+				"preview-p": "0.875rem", // Equivalent to 14px (0.875 * 16px)
+				"preview-p-bold": "0.875rem", // Equivalent to 14px (0.875 * 16px)
+			},
+			lineHeight: {
+				"preview-p": "1.5",
+				"preview-p-bold": "1.5",
+				"markdown-code": "1.5",
 			},
 			colors: {
 				"cstm-orange": {
