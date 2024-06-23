@@ -11,9 +11,13 @@ import Light from "@/app/Light";
 const Sidebar = ({
 	isOpen,
 	documents,
+	isLight,
+	setIsLight,
 }: {
 	isOpen: boolean;
 	documents: Data[];
+	isLight: boolean;
+	setIsLight: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	const formatDate = (date: string) => {
 		const d = new Date(date);
@@ -23,8 +27,6 @@ const Sidebar = ({
 			year: "numeric",
 		});
 	};
-
-	const [isCheck, setIsCheck] = useState(false);
 
 	return (
 		<aside
@@ -37,7 +39,7 @@ const Sidebar = ({
 			)}
 		>
 			<div className="flex flex-col gap-6">
-				<h2 className="uppercase text-heading-s tracking-[2px] text-cstm-black-500">
+				<h2 className="uppercase text-heading-s font-medium tracking-[2px] text-cstm-black-500">
 					my documents
 				</h2>
 				<button className="text-white bg-cstm-orange-default w-full py-3 rounded-md">
@@ -51,7 +53,7 @@ const Sidebar = ({
 						>
 							<File />
 							<div>
-								<p className="text-body-m text-cstm-black-500">
+								<p className="text-body-m font-light text-cstm-black-500">
 									{formatDate(doc.created_at)}
 								</p>
 								<p className="text-heading-m group-hover:text-cstm-orange-default cursor-pointer">
@@ -63,7 +65,7 @@ const Sidebar = ({
 				</ul>
 			</div>
 			<div className="w-full flex items-center gap-4">
-				<Dark fill={isCheck ? "#5A6069" : "#ffffff"} />
+				<Dark fill={isLight ? "#5A6069" : "#ffffff"} />
 				<label
 					htmlFor="lightdarkswitcher"
 					className="w-[48px] h-[24px] bg-cstm-black-500 rounded-full relative cursor-pointer"
@@ -72,12 +74,12 @@ const Sidebar = ({
 						type="checkbox"
 						id="lightdarkswitcher"
 						className="sr-only peer"
-						checked={isCheck}
-						onChange={() => setIsCheck(!isCheck)}
+						checked={isLight}
+						onChange={() => setIsLight(!isLight)}
 					/>
 					<span className="w-[12px] h-[12px] rounded-full bg-white absolute top-[6px] left-1 peer-checked:left-8 transition-all duration-300"></span>
 				</label>
-				<Light fill={isCheck ? "#ffffff" : "#5A6069"} />
+				<Light fill={isLight ? "#ffffff" : "#5A6069"} />
 			</div>
 		</aside>
 	);

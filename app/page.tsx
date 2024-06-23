@@ -44,10 +44,20 @@ export default function Home() {
 	// #endregion
 
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+	const [isLight, setIsLight] = useState(false);
 
 	return (
-		<main className="flex w-full min-h-screen bg-white">
-			<Sidebar isOpen={sidebarIsOpen} documents={mdData} />
+		<main
+			className={cn("flex w-full min-h-screen bg-white", {
+				dark: !isLight,
+			})}
+		>
+			<Sidebar
+				isOpen={sidebarIsOpen}
+				documents={mdData}
+				isLight={isLight}
+				setIsLight={setIsLight}
+			/>
 			<div
 				className={cn("w-full flex flex-col transition-all duration-300", {
 					"ml-[250px]": sidebarIsOpen,
@@ -56,8 +66,23 @@ export default function Home() {
 			>
 				<Navbar setSidebarIsOpen={setSidebarIsOpen} />
 				<div className="flex w-full h-full">
-					<div className="w-[50%] bg-red-500">Markdown Editor</div>
-					<div className="w-[50%]">Preview</div>
+					<div className="flex flex-col w-[50%] h-full bg-white dark:bg-cstm-black-1000 dark:text-white border-r border-r-cstm-black-300 dark:border-r-cstm-black-600">
+						<h2 className="h-[42px] w-full flex-none bg-cstm-black-200 dark:bg-cstm-black-900 flex items-center p-4 uppercase text-cstm-black-500 text-heading-s tracking-[2px] font-medium">
+							markdown
+						</h2>
+						<div className="grow w-full flex">
+							<textarea
+								name="mdinput"
+								id="mdinput"
+								className="w-full p-6 grow resize-none border-none overflow-auto outline-none text-cstm-black-700 dark:text-cstm-black-400 bg-white dark:bg-cstm-black-1000"
+							></textarea>
+						</div>
+					</div>
+					<div className="w-[50%] bg-white dark:bg-cstm-black-1000 dark:text-white">
+						<h2 className="h-[42px] w-full bg-cstm-black-200 dark:bg-cstm-black-900 flex items-center p-4 uppercase text-cstm-black-500 text-heading-s tracking-[2px] font-medium">
+							preview
+						</h2>
+					</div>
 				</div>
 			</div>
 		</main>

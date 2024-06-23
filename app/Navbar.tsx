@@ -24,8 +24,10 @@ const Navbar = ({
 				<div className="w-[1px] h-[40px] bg-cstm-black-600"></div>
 				<File />
 				<div>
-					<p className="text-body-m text-cstm-black-500">Document Name</p>
-					<p className="text-heading-m text-white">welcome.md</p>
+					<p className="text-body-m font-light text-cstm-black-500">
+						Document Name
+					</p>
+					<h1 className="text-heading-m text-white">welcome.md</h1>
 				</div>
 			</div>
 			<div className="flex items-center gap-4 mr-4">
