@@ -8,7 +8,7 @@ const font = Roboto({
 });
 
 export const metadata: Metadata = {
-	title: "Mardown",
+	title: "Markdown",
 	description: "Your personal markdown editor",
 };
 
