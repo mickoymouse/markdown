@@ -5,6 +5,8 @@ import { useEffect, useState } from "react";
 
 import { Data, data as initialData } from "@/db/data";
 import Navbar from "@/app/Navbar";
+import Sidebar from "@/app/Sidebar";
+import { cn } from "@/lib/utils";
 
 const fontRbSlab = Roboto_Slab({
 	weight: ["100", "300", "400", "500", "700", "900"],
@@ -17,9 +19,8 @@ const fontRbMono = Roboto_Mono({
 });
 
 export default function Home() {
-	const [mdData, setMdData] = useState<Data[]>(initialData);
-
 	// #region initialize data
+	const [mdData, setMdData] = useState<Data[]>(initialData);
 
 	useEffect(() => {
 		const data = getFromLS();
@@ -41,11 +42,18 @@ export default function Home() {
 
 	// #endregion
 
+	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
+
 	return (
 		<main className="flex w-full min-h-screen">
-			<aside className="w-[10%] bg-yellow-900">SIDEBAR HERE</aside>
-			<div className="w-full flex flex-col">
-				<Navbar />
+			<Sidebar isOpen={sidebarIsOpen} />
+			<div
+				className={cn("w-full flex flex-col transition-all duration-300", {
+					"ml-[250px]": sidebarIsOpen,
+					"ml-0": !sidebarIsOpen,
+				})}
+			>
+				<Navbar setSidebarIsOpen={setSidebarIsOpen} />
 				<div className="flex w-full h-full">
 					<div className="w-[50%] bg-red-500">Markdown Editor</div>
 					<div className="w-[50%]">Preview</div>

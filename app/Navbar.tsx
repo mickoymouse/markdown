@@ -4,11 +4,20 @@ import File from "@/app/File";
 import Delete from "@/app/Delete";
 import Save from "@/app/Save";
 
-const Navbar = () => {
+const Navbar = ({
+	setSidebarIsOpen,
+}: {
+	setSidebarIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+}) => {
 	return (
 		<nav className="bg-cstm-black-800 h-[72px] flex items-center justify-between">
 			<div className="flex h-full items-center gap-4">
-				<button className="bg-cstm-black-700 h-full p-6">
+				<button
+					className="bg-cstm-black-700 h-full p-6"
+					onClick={() => {
+						setSidebarIsOpen((prev) => !prev);
+					}}
+				>
 					<MenuIcon />
 				</button>
 				<Logo />
