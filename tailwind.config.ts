@@ -20,12 +20,6 @@ const config: Config = {
 				"preview-h5": "1rem", // Equivalent to 16px (1 * 16px)
 				"preview-h6": "0.875rem", // Equivalent to 14px (0.875 * 16px)
 				"preview-p": "0.875rem", // Equivalent to 14px (0.875 * 16px)
-				"preview-p-bold": "0.875rem", // Equivalent to 14px (0.875 * 16px)
-			},
-			lineHeight: {
-				"preview-p": "1.5",
-				"preview-p-bold": "1.5",
-				"markdown-code": "1.5",
 			},
 			colors: {
 				"cstm-orange": {
