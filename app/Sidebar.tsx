@@ -7,6 +7,7 @@ import { Data } from "@/db/data";
 import File from "@/app/File";
 import Dark from "@/app/Dark";
 import Light from "@/app/Light";
+import Link from "next/link";
 
 const Sidebar = ({
 	isOpen,
@@ -52,14 +53,14 @@ const Sidebar = ({
 							className="flex items-center gap-4 group cursor-pointer"
 						>
 							<File />
-							<div>
+							<Link href={`/${doc.id}`}>
 								<p className="text-body-m font-light text-cstm-black-500">
 									{formatDate(doc.created_at)}
 								</p>
 								<p className="text-heading-m group-hover:text-cstm-orange-default cursor-pointer">
 									{doc.name}
 								</p>
-							</div>
+							</Link>
 						</li>
 					))}
 				</ul>

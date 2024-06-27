@@ -23,7 +23,9 @@ type CustomComponents = {
 	[key: string]: React.ComponentType<{ children: React.ReactNode }>;
 };
 
-export default function MarkdownPage() {
+export default function MarkdownPage({ params }: { params: { mdId: string } }) {
+	const { mdId } = params;
+
 	const [mdData, setMdData] = useState<Data[]>(initialData);
 
 	// #region initialize data
@@ -50,7 +52,6 @@ export default function MarkdownPage() {
 
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [isLight, setIsLight] = useState(false);
-	const [markdown, setMarkdown] = useState(mdData[0].content);
 
 	const customComponents: CustomComponents = {
 		h1({ children, ...rest }) {
@@ -171,6 +172,12 @@ export default function MarkdownPage() {
 			);
 		},
 	};
+
+	const getMdData = (id: string) => {
+		return mdData.find((doc) => doc.id === id);
+	};
+
+	const [markdown, setMarkdown] = useState(getMdData(mdId)?.content);
 
 	return (
 		<>
