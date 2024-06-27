@@ -8,7 +8,8 @@ import { Data, data as initialData } from "@/db/data";
 import Navbar from "@/app/Navbar";
 import Sidebar from "@/app/Sidebar";
 import { cn } from "@/lib/utils";
-import { redirect } from "next/navigation";
+import HideEditor from "@/app/HideEditor";
+import ShowEditor from "@/app/ShowEditor";
 
 const fontRbSlab = Roboto_Slab({
 	weight: ["100", "300", "400", "500", "700", "900"],
@@ -202,8 +203,11 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 		setMdData(newData);
 	};
 
+	const [isEditorHidden, setIsEditorHidden] = useState(false);
+
 	if (markdown === undefined || markdown === null) {
 	}
+
 	return (
 		<>
 			<Sidebar
@@ -229,7 +233,14 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 						mdData={getMdData(mdId)}
 					/>
 					<main className="flex w-full h-full">
-						<div className="flex flex-col w-[50%] h-full bg-white dark:bg-cstm-black-1000 dark:text-white border-r border-r-cstm-black-300 dark:border-r-cstm-black-600">
+						<div
+							className={cn(
+								"flex flex-col w-[50%] h-full bg-white dark:bg-cstm-black-1000 dark:text-white border-r border-r-cstm-black-300 dark:border-r-cstm-black-600",
+								{
+									hidden: isEditorHidden,
+								}
+							)}
+						>
 							<h2 className="h-[42px] w-full flex-none bg-cstm-black-200 dark:bg-cstm-black-900 flex items-center p-4 uppercase text-cstm-black-500 text-heading-s tracking-[2px] font-medium">
 								markdown
 							</h2>
@@ -244,10 +255,20 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 								></textarea>
 							</div>
 						</div>
-						<div className="flex flex-col w-[50%] bg-white dark:bg-cstm-black-1000 dark:text-white">
-							<h2 className="h-[42px] w-full bg-cstm-black-200 dark:bg-cstm-black-900 flex items-center p-4 uppercase text-cstm-black-500 text-heading-s tracking-[2px] font-medium">
-								preview
-							</h2>
+						<div
+							className={cn(
+								"flex flex-col w-[50%] bg-white dark:bg-cstm-black-1000 dark:text-white",
+								{ "w-full": isEditorHidden }
+							)}
+						>
+							<div className="h-[42px] w-full bg-cstm-black-200 dark:bg-cstm-black-900 flex items-center justify-between p-4">
+								<h2 className="uppercase text-cstm-black-500 text-heading-s tracking-[2px] font-medium">
+									preview
+								</h2>
+								<button onClick={() => setIsEditorHidden(!isEditorHidden)}>
+									{isEditorHidden ? <HideEditor /> : <ShowEditor />}
+								</button>
+							</div>
 							<div className="grow w-full max-h-[calc(100vh-114px)] flex flex-col p-6 gap-4 overflow-y-auto">
 								<Markdown components={customComponents}>{markdown}</Markdown>
 							</div>
