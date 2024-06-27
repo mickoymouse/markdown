@@ -3,11 +3,16 @@ import Logo from "@/app/Logo";
 import File from "@/app/File";
 import Delete from "@/app/Delete";
 import Save from "@/app/Save";
+import { Data } from "@/db/data";
 
 const Navbar = ({
 	setSidebarIsOpen,
+	saveMdData,
+	mdData,
 }: {
 	setSidebarIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
+	saveMdData: (id: string) => void;
+	mdData: Data | undefined;
 }) => {
 	return (
 		<nav className="bg-cstm-black-800 h-[72px] flex items-center justify-between">
@@ -27,14 +32,19 @@ const Navbar = ({
 					<p className="text-body-m font-light text-cstm-black-500">
 						Document Name
 					</p>
-					<h1 className="text-heading-m text-white">welcome.md</h1>
+					<h1 className="text-heading-m text-white"> {mdData?.name}</h1>
 				</div>
 			</div>
 			<div className="flex items-center gap-4 mr-4">
 				<button>
 					<Delete />
 				</button>
-				<button className="flex gap-2 items-center text-white bg-cstm-orange-default p-2 rounded-md hover:bg-cstm-orange-hover">
+				<button
+					className="flex gap-2 items-center text-white bg-cstm-orange-default p-2 rounded-md hover:bg-cstm-orange-hover"
+					onClick={() => {
+						saveMdData(mdData?.id!);
+					}}
+				>
 					<Save />
 					<span>Save Changes</span>
 				</button>

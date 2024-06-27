@@ -8,6 +8,7 @@ import { Data, data as initialData } from "@/db/data";
 import Navbar from "@/app/Navbar";
 import Sidebar from "@/app/Sidebar";
 import { cn } from "@/lib/utils";
+import { redirect } from "next/navigation";
 
 const fontRbSlab = Roboto_Slab({
 	weight: ["100", "300", "400", "500", "700", "900"],
@@ -26,29 +27,30 @@ type CustomComponents = {
 export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 	const { mdId } = params;
 
-	const [mdData, setMdData] = useState<Data[]>(initialData);
-
-	// #region initialize data
+	const [mdData, setMdData] = useState<Data[] | undefined>(undefined);
+	const [markdown, setMarkdown] = useState<string>();
 
 	useEffect(() => {
-		const data = getFromLS();
-		if (data) {
-			setMdData(JSON.parse(data));
-		} else {
-			saveToLS(initialData);
+		const lsData = getFromLS();
+		if (lsData === undefined) {
 			setMdData(initialData);
+			saveToLS(initialData);
+			setMarkdown(initialData.find((doc: Data) => doc.id === mdId)?.content);
+		} else {
+			const parsedData = JSON.parse(lsData);
+			setMdData(parsedData);
+			setMarkdown(parsedData.find((doc: Data) => doc.id === mdId)?.content);
 		}
 	}, []);
 
-	const saveToLS = (data: Data[]) => {
+	const saveToLS = (data: Data[] | undefined) => {
 		localStorage.setItem("markdown", JSON.stringify(data));
 	};
 
 	const getFromLS = () => {
-		return localStorage.getItem("markdown") ?? null;
+		const item = localStorage.getItem("markdown");
+		return item !== null ? item : undefined;
 	};
-
-	// #endregion
 
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [isLight, setIsLight] = useState(false);
@@ -173,12 +175,35 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 		},
 	};
 
-	const getMdData = (id: string) => {
-		return mdData.find((doc) => doc.id === id);
+	const getMdData = (id: string): Data | undefined => {
+		return mdData?.find((doc) => doc.id === id);
 	};
 
-	const [markdown, setMarkdown] = useState(getMdData(mdId)?.content);
+	const saveMdData = (id: string) => {
+		const newData: Data = {
+			id,
+			name: getMdData(id)?.name!,
+			created_at: getMdData(id)?.created_at!,
+			content: markdown!,
+		};
 
+		const mutatedMdData = mutateMdData(id, newData);
+
+		setMdData(mutatedMdData);
+		saveToLS(mutatedMdData);
+	};
+
+	const mutateMdData = (id: string, newData: Data) => {
+		return mdData?.map((md) => (md.id === id ? { ...md, ...newData } : md));
+	};
+
+	const deleteMdData = (id: string) => {
+		const newData = mdData?.filter((doc) => doc.id !== id);
+		setMdData(newData);
+	};
+
+	if (markdown === undefined || markdown === null) {
+	}
 	return (
 		<>
 			<Sidebar
@@ -198,7 +223,11 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 						"ml-0": !sidebarIsOpen,
 					})}
 				>
-					<Navbar setSidebarIsOpen={setSidebarIsOpen} />
+					<Navbar
+						setSidebarIsOpen={setSidebarIsOpen}
+						saveMdData={saveMdData}
+						mdData={getMdData(mdId)}
+					/>
 					<main className="flex w-full h-full">
 						<div className="flex flex-col w-[50%] h-full bg-white dark:bg-cstm-black-1000 dark:text-white border-r border-r-cstm-black-300 dark:border-r-cstm-black-600">
 							<h2 className="h-[42px] w-full flex-none bg-cstm-black-200 dark:bg-cstm-black-900 flex items-center p-4 uppercase text-cstm-black-500 text-heading-s tracking-[2px] font-medium">

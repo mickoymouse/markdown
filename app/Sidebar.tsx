@@ -16,7 +16,7 @@ const Sidebar = ({
 	setIsLight,
 }: {
 	isOpen: boolean;
-	documents: Data[];
+	documents: Data[] | undefined;
 	isLight: boolean;
 	setIsLight: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
@@ -47,7 +47,7 @@ const Sidebar = ({
 					+ New Document
 				</button>
 				<ul className="flex flex-col gap-4">
-					{documents.map((doc) => (
+					{documents?.map((doc) => (
 						<li
 							key={doc.id}
 							className="flex items-center gap-4 group cursor-pointer"
