@@ -23,7 +23,7 @@ type CustomComponents = {
 	[key: string]: React.ComponentType<{ children: React.ReactNode }>;
 };
 
-export default function Home() {
+export default function MarkdownPage() {
 	const [mdData, setMdData] = useState<Data[]>(initialData);
 
 	// #region initialize data
