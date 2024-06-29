@@ -235,15 +235,23 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 					<main className="flex w-full h-full">
 						<div
 							className={cn(
-								"flex flex-col w-[50%] h-full bg-white dark:bg-cstm-black-1000 dark:text-white border-r border-r-cstm-black-300 dark:border-r-cstm-black-600",
+								"flex flex-col w-full md:w-[50%] h-full bg-white dark:bg-cstm-black-1000 dark:text-white border-r border-r-cstm-black-300 dark:border-r-cstm-black-600",
 								{
 									hidden: isEditorHidden,
 								}
 							)}
 						>
-							<h2 className="h-[42px] w-full flex-none bg-cstm-black-200 dark:bg-cstm-black-900 flex items-center p-4 uppercase text-cstm-black-500 text-heading-s tracking-[2px] font-medium">
-								markdown
-							</h2>
+							<div className="h-[42px] w-full flex-none bg-cstm-black-200 dark:bg-cstm-black-900 flex items-center justify-between p-4">
+								<h2 className=" uppercase text-cstm-black-500 text-heading-s tracking-[2px] font-medium">
+									markdown
+								</h2>
+								<button
+									className="md:hidden"
+									onClick={() => setIsEditorHidden(!isEditorHidden)}
+								>
+									{isEditorHidden ? <HideEditor /> : <ShowEditor />}
+								</button>
+							</div>
 							<div className="grow w-full flex">
 								<textarea
 									autoFocus
@@ -257,8 +265,8 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 						</div>
 						<div
 							className={cn(
-								"flex flex-col w-[50%] bg-white dark:bg-cstm-black-1000 dark:text-white",
-								{ "w-full": isEditorHidden }
+								"hidden md:flex flex-col w-full bg-white dark:bg-cstm-black-1000 dark:text-white",
+								{ "w-full flex": isEditorHidden, "w-[50%]": !isEditorHidden }
 							)}
 						>
 							<div className="h-[42px] w-full bg-cstm-black-200 dark:bg-cstm-black-900 flex items-center justify-between p-4">
