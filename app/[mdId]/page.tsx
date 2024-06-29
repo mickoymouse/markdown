@@ -231,6 +231,7 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 						setSidebarIsOpen={setSidebarIsOpen}
 						saveMdData={saveMdData}
 						mdData={getMdData(mdId)}
+						isOpen={sidebarIsOpen}
 					/>
 					<main className="flex w-full h-full">
 						<div

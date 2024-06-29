@@ -4,32 +4,57 @@ import File from "@/app/File";
 import Delete from "@/app/Delete";
 import Save from "@/app/Save";
 import { Data } from "@/db/data";
+import { cn } from "@/lib/utils";
+import CloseIcon from "@/app/CloseIcon";
 
 const Navbar = ({
 	setSidebarIsOpen,
 	saveMdData,
 	mdData,
+	isOpen,
 }: {
 	setSidebarIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	saveMdData: (id: string) => void;
 	mdData: Data | undefined;
+	isOpen: boolean;
 }) => {
 	return (
 		<nav className="bg-cstm-black-800 h-[56px] md:h-[72px] flex items-center justify-between">
-			<div className="flex h-full items-center gap-4">
+			<div
+				className={cn("flex h-full items-center gap-4", {
+					"w-full overflow-x-hidden": isOpen,
+				})}
+			>
 				<button
-					className="bg-cstm-black-700 h-full px-4"
+					className={cn("bg-cstm-black-700 h-full px-4", {
+						"w-[56px]": isOpen,
+					})}
 					onClick={() => {
 						setSidebarIsOpen((prev) => !prev);
 					}}
 				>
-					<MenuIcon />
+					<div
+						className={cn({
+							hidden: !isOpen,
+						})}
+					>
+						<CloseIcon />
+					</div>
+					<div
+						className={cn({
+							hidden: isOpen,
+						})}
+					>
+						<MenuIcon />
+					</div>
 				</button>
 				<div className="hidden md:block">
 					<Logo />
 				</div>
 				<div className="hidden md:block w-[1px] h-[40px] bg-cstm-black-600"></div>
-				<File />
+				<div className="w-[16px]">
+					<File />
+				</div>
 				<div>
 					<p className="hidden md:block text-body-m font-light text-cstm-black-500">
 						Document Name
@@ -37,7 +62,7 @@ const Navbar = ({
 					<h1 className="text-heading-m text-white"> {mdData?.name}</h1>
 				</div>
 			</div>
-			<div className="flex items-center gap-4 mr-4">
+			<div className={cn("flex items-center gap-4 mr-4", { hidden: isOpen })}>
 				<button>
 					<Delete />
 				</button>
