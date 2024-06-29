@@ -15,21 +15,23 @@ const Navbar = ({
 	mdData: Data | undefined;
 }) => {
 	return (
-		<nav className="bg-cstm-black-800 h-[72px] flex items-center justify-between">
+		<nav className="bg-cstm-black-800 h-[56px] md:h-[72px] flex items-center justify-between">
 			<div className="flex h-full items-center gap-4">
 				<button
-					className="bg-cstm-black-700 h-full p-6"
+					className="bg-cstm-black-700 h-full px-4"
 					onClick={() => {
 						setSidebarIsOpen((prev) => !prev);
 					}}
 				>
 					<MenuIcon />
 				</button>
-				<Logo />
-				<div className="w-[1px] h-[40px] bg-cstm-black-600"></div>
+				<div className="hidden md:block">
+					<Logo />
+				</div>
+				<div className="hidden md:block w-[1px] h-[40px] bg-cstm-black-600"></div>
 				<File />
 				<div>
-					<p className="text-body-m font-light text-cstm-black-500">
+					<p className="hidden md:block text-body-m font-light text-cstm-black-500">
 						Document Name
 					</p>
 					<h1 className="text-heading-m text-white"> {mdData?.name}</h1>
@@ -46,7 +48,7 @@ const Navbar = ({
 					}}
 				>
 					<Save />
-					<span>Save Changes</span>
+					<span className="hidden md:block">Save Changes</span>
 				</button>
 			</div>
 		</nav>
