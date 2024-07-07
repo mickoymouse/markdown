@@ -131,7 +131,7 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 			return (
 				<pre
 					{...rest}
-					className={`p-6 rounded-md text-markdown-code leading-6 text-cstm-black-700 dark:text-white bg-cstm-black-200 dark:bg-cstm-black-800 ${fontRbSlab.className}`}
+					className={`whitespace-pre-wrap p-6 rounded-md text-markdown-code leading-6 text-cstm-black-700 dark:text-white bg-cstm-black-200 dark:bg-cstm-black-800 ${fontRbSlab.className}`}
 				>
 					{children}
 				</pre>
