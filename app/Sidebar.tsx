@@ -63,6 +63,7 @@ const Sidebar = ({
 							content: "",
 						});
 					}}
+					aria-label="Create New Document"
 				>
 					+ New Document
 				</button>

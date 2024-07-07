@@ -34,6 +34,7 @@ const Navbar = ({
 					onClick={() => {
 						setSidebarIsOpen((prev) => !prev);
 					}}
+					aria-label="Toggle Sidebar"
 				>
 					<div
 						className={cn({
@@ -69,7 +70,10 @@ const Navbar = ({
 					hidden: isOpen || mdData?.id == "1",
 				})}
 			>
-				<button onClick={() => setIsDeleteModalOpen((prev) => !prev)}>
+				<button
+					onClick={() => setIsDeleteModalOpen((prev) => !prev)}
+					aria-label="Delete Document"
+				>
 					<Delete />
 				</button>
 				<button
@@ -77,6 +81,7 @@ const Navbar = ({
 					onClick={() => {
 						saveMdData(mdData?.id!);
 					}}
+					aria-label="Save Document"
 				>
 					<Save />
 					<span className="hidden md:block">Save Changes</span>

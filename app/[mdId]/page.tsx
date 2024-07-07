@@ -268,6 +268,7 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 								<button
 									className="md:hidden"
 									onClick={() => setIsEditorHidden(!isEditorHidden)}
+									aria-label="Toggle Editor"
 								>
 									{isEditorHidden ? <HideEditor /> : <ShowEditor />}
 								</button>
@@ -293,7 +294,10 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 								<h2 className="uppercase text-cstm-black-500 text-heading-s tracking-[2px] font-medium">
 									preview
 								</h2>
-								<button onClick={() => setIsEditorHidden(!isEditorHidden)}>
+								<button
+									onClick={() => setIsEditorHidden(!isEditorHidden)}
+									aria-label="Toggle Editor"
+								>
 									{isEditorHidden ? <HideEditor /> : <ShowEditor />}
 								</button>
 							</div>
@@ -330,6 +334,7 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 					<button
 						className={`flex w-full items-center justify-center p-4 rounded-md bg-cstm-orange-default hover:bg-cstm-orange-hover text-white text-[15px] ${fontRoboto.className}`}
 						onClick={() => deleteMdData(mdId)}
+						aria-label="Confirm & Delete"
 					>
 						Confirm &amp; Delete
 					</button>
