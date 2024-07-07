@@ -214,6 +214,13 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 		router.replace("/");
 	};
 
+	const newMdData = (data: Data) => {
+		const newData = [...mdData!, data];
+		setMdData(newData);
+		saveToLS(newData);
+		router.push(`/${data.id}`);
+	};
+
 	const [isEditorHidden, setIsEditorHidden] = useState(false);
 
 	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
@@ -225,6 +232,7 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 				documents={mdData}
 				isLight={isLight}
 				setIsLight={setIsLight}
+				newMdData={newMdData}
 			/>
 			<div
 				className={cn("flex w-full min-h-screen bg-white", {

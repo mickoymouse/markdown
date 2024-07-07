@@ -8,17 +8,20 @@ import File from "@/app/File";
 import Dark from "@/app/Dark";
 import Light from "@/app/Light";
 import Link from "next/link";
+import { v4 as uuidv4 } from "uuid";
 
 const Sidebar = ({
 	isOpen,
 	documents,
 	isLight,
 	setIsLight,
+	newMdData,
 }: {
 	isOpen: boolean;
 	documents: Data[] | undefined;
 	isLight: boolean;
 	setIsLight: React.Dispatch<React.SetStateAction<boolean>>;
+	newMdData: (data: Data) => void;
 }) => {
 	const formatDate = (date: string) => {
 		const d = new Date(date);
@@ -28,6 +31,13 @@ const Sidebar = ({
 			year: "numeric",
 		});
 	};
+
+	const sortedDocuments = documents
+		?.slice()
+		.sort(
+			(a: Data, b: Data) =>
+				new Date(b.created_at).getTime() - new Date(a.created_at).getTime()
+		);
 
 	return (
 		<aside
@@ -43,11 +53,21 @@ const Sidebar = ({
 				<h2 className="uppercase text-heading-s font-medium tracking-[2px] text-cstm-black-500">
 					my documents
 				</h2>
-				<button className="text-white bg-cstm-orange-default w-full py-3 rounded-md">
+				<button
+					className="text-white bg-cstm-orange-default w-full py-3 rounded-md"
+					onClick={() => {
+						newMdData({
+							id: uuidv4(),
+							created_at: new Date().toISOString(),
+							name: "Untitled.md",
+							content: "",
+						});
+					}}
+				>
 					+ New Document
 				</button>
 				<ul className="flex flex-col gap-4">
-					{documents?.map((doc) => (
+					{sortedDocuments?.map((doc) => (
 						<li
 							key={doc.id}
 							className="flex items-center gap-4 group cursor-pointer"
