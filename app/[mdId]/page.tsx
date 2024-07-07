@@ -278,7 +278,7 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 									{isEditorHidden ? <HideEditor /> : <ShowEditor />}
 								</button>
 							</div>
-							<div className="grow w-full max-h-[calc(100vh-114px)] flex flex-col p-6 gap-4 overflow-y-auto">
+							<div className="grow w-full max-h-[calc(100vh-98px)] md:max-h-[calc(100vh-114px)] flex flex-col p-6 gap-4 overflow-y-auto">
 								<Markdown components={customComponents}>{markdown}</Markdown>
 							</div>
 						</div>
