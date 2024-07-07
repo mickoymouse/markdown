@@ -280,6 +280,7 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 									onChange={(e) => setMarkdown(e.target.value)}
 									name="mdinput"
 									id="mdinput"
+									aria-label="Markdown Editor"
 									className="w-full p-6 grow resize-none border-none overflow-auto outline-none text-cstm-black-700 dark:text-cstm-black-400 bg-white dark:bg-cstm-black-1000"
 								></textarea>
 							</div>
