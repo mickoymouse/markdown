@@ -312,9 +312,9 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 				<div
 					className={`${fontRbSlab.className} bg-white dark:bg-cstm-black-900 z-20 max-w-[343px] p-4 rounded-md flex flex-col gap-4`}
 				>
-					<h2 className="font-bold text-[20px] text-cstm-black-700 dark:text-white">
+					<h4 className="font-bold text-[20px] text-cstm-black-700 dark:text-white">
 						Delete this document?
-					</h2>
+					</h4>
 					<p className="text-[14px] text-cstm-black-500 dark:text-cstm-black-400">
 						Are you sure you want to delete {getMdData(mdId)?.name} document and
 						its contents? This action cannot be reversed.
