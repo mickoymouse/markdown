@@ -1,6 +1,6 @@
 "use client";
 
-import { Roboto_Mono, Roboto_Slab } from "next/font/google";
+import { Roboto_Mono, Roboto_Slab, Roboto } from "next/font/google";
 import { useEffect, useState } from "react";
 import Markdown from "react-markdown";
 
@@ -10,6 +10,7 @@ import Sidebar from "@/app/Sidebar";
 import { cn } from "@/lib/utils";
 import HideEditor from "@/app/HideEditor";
 import ShowEditor from "@/app/ShowEditor";
+import { useRouter } from "next/navigation";
 
 const fontRbSlab = Roboto_Slab({
 	weight: ["100", "300", "400", "500", "700", "900"],
@@ -21,15 +22,31 @@ const fontRbMono = Roboto_Mono({
 	subsets: ["latin"],
 });
 
+const fontRoboto = Roboto({
+	weight: ["100", "300", "400", "500", "700", "900"],
+	subsets: ["latin"],
+});
+
 type CustomComponents = {
 	[key: string]: React.ComponentType<{ children: React.ReactNode }>;
 };
 
 export default function MarkdownPage({ params }: { params: { mdId: string } }) {
+	const router = useRouter();
+
 	const { mdId } = params;
 
 	const [mdData, setMdData] = useState<Data[] | undefined>(undefined);
 	const [markdown, setMarkdown] = useState<string>();
+
+	const saveToLS = (data: Data[] | undefined) => {
+		localStorage.setItem("markdown", JSON.stringify(data));
+	};
+
+	const getFromLS = () => {
+		const item = localStorage.getItem("markdown");
+		return item !== null ? item : undefined;
+	};
 
 	useEffect(() => {
 		const lsData = getFromLS();
@@ -43,15 +60,6 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 			setMarkdown(parsedData.find((doc: Data) => doc.id === mdId)?.content);
 		}
 	}, []);
-
-	const saveToLS = (data: Data[] | undefined) => {
-		localStorage.setItem("markdown", JSON.stringify(data));
-	};
-
-	const getFromLS = () => {
-		const item = localStorage.getItem("markdown");
-		return item !== null ? item : undefined;
-	};
 
 	const [sidebarIsOpen, setSidebarIsOpen] = useState(false);
 	const [isLight, setIsLight] = useState(false);
@@ -201,12 +209,14 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 	const deleteMdData = (id: string) => {
 		const newData = mdData?.filter((doc) => doc.id !== id);
 		setMdData(newData);
+		saveToLS(newData);
+		setIsDeleteModalOpen(false);
+		router.replace("/");
 	};
 
 	const [isEditorHidden, setIsEditorHidden] = useState(false);
 
-	if (markdown === undefined || markdown === null) {
-	}
+	const [isDeleteModalOpen, setIsDeleteModalOpen] = useState(false);
 
 	return (
 		<>
@@ -232,6 +242,7 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 						saveMdData={saveMdData}
 						mdData={getMdData(mdId)}
 						isOpen={sidebarIsOpen}
+						setIsDeleteModalOpen={setIsDeleteModalOpen}
 					/>
 					<main className="flex w-full h-full">
 						<div
@@ -283,6 +294,37 @@ export default function MarkdownPage({ params }: { params: { mdId: string } }) {
 							</div>
 						</div>
 					</main>
+				</div>
+			</div>
+			<div
+				className={cn(
+					"fixed inset-0 w-full min-h-screen flex items-center justify-center z-10",
+					{
+						dark: !isLight,
+						hidden: !isDeleteModalOpen,
+					}
+				)}
+			>
+				<div
+					className="w-full h-full bg-cstm-black-500 opacity-50 z-10 fixed inset-0"
+					onClick={() => setIsDeleteModalOpen((prev) => !prev)}
+				></div>
+				<div
+					className={`${fontRbSlab.className} bg-white dark:bg-cstm-black-900 z-20 max-w-[343px] p-4 rounded-md flex flex-col gap-4`}
+				>
+					<h2 className="font-bold text-[20px] text-cstm-black-700 dark:text-white">
+						Delete this document?
+					</h2>
+					<p className="text-[14px] text-cstm-black-500 dark:text-cstm-black-400">
+						Are you sure you want to delete {getMdData(mdId)?.name} document and
+						its contents? This action cannot be reversed.
+					</p>
+					<button
+						className={`flex w-full items-center justify-center p-4 rounded-md bg-cstm-orange-default hover:bg-cstm-orange-hover text-white text-[15px] ${fontRoboto.className}`}
+						onClick={() => deleteMdData(mdId)}
+					>
+						Confirm &amp; Delete
+					</button>
 				</div>
 			</div>
 		</>

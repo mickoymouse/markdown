@@ -12,11 +12,13 @@ const Navbar = ({
 	saveMdData,
 	mdData,
 	isOpen,
+	setIsDeleteModalOpen,
 }: {
 	setSidebarIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 	saveMdData: (id: string) => void;
 	mdData: Data | undefined;
 	isOpen: boolean;
+	setIsDeleteModalOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }) => {
 	return (
 		<nav className="bg-cstm-black-800 h-[56px] md:h-[72px] flex items-center justify-between">
@@ -62,8 +64,12 @@ const Navbar = ({
 					<h1 className="text-heading-m text-white"> {mdData?.name}</h1>
 				</div>
 			</div>
-			<div className={cn("flex items-center gap-4 mr-4", { hidden: isOpen })}>
-				<button>
+			<div
+				className={cn("flex items-center gap-4 mr-4", {
+					hidden: isOpen || mdData?.id == "1",
+				})}
+			>
+				<button onClick={() => setIsDeleteModalOpen((prev) => !prev)}>
 					<Delete />
 				</button>
 				<button
